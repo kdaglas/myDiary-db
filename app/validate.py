@@ -15,9 +15,6 @@ class FieldValidation:
         
 
     def validate_entered_id(self, id):
-        try:
-            entry_id = int(id)
-        except ValueError:
-            return jsonify({"message": "id should be an interger"}), 400
+        pass
 
    
