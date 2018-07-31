@@ -2,6 +2,7 @@ app/*.pyc
 test/*.pyc/
 
 envn/
+env/
 .vscode/
 app/__pycache__/.ar
 app/database/__pycache__/.
