@@ -3,16 +3,26 @@ from pprint import pprint
 from app import app
 
 
-class DatabaseConnect:
+class DatabaseConnection:
     def __init__(self):
         if app.config['TESTING']:
             print("Testing")
             self.con = psycopg2.connect(
-                database="testdb", user="admin", password="admin", host="localhost", port="5432")
+                            database="testdb", 
+                            user="admin", 
+                            password="admin", 
+                            host="localhost", 
+                            port="5432"
+                        )
         else:
             print("Development")
             self.con = psycopg2.connect(
-                database="mydiary", user="admin", password="admin", host="localhost", port="5432")
+                            database="mydiary", 
+                            user="admin", 
+                            password="admin", 
+                            host="localhost", 
+                            port="5432"
+                        )
 
         self.con.autocommit = True
         self.cursor = self.con.cursor()
@@ -24,8 +34,8 @@ class DatabaseConnect:
             """
             CREATE TABLE IF NOT EXISTS users (
                 user_id SERIAL PRIMARY KEY,
-                username VARCHAR(50) NOT NULL UNIQUE,
-                emailaddress VARCHAR(15) NOT NULL UNIQUE,
+                username VARCHAR(25) NOT NULL UNIQUE,
+                emailaddress VARCHAR(50) NOT NULL UNIQUE,
                 password VARCHAR(25) NOT NULL
             );
             """,
@@ -33,9 +43,9 @@ class DatabaseConnect:
             """
 			CREATE TABLE IF NOT EXISTS entries (
 				entry_id SERIAL PRIMARY KEY,
-				secondName VARCHAR(50) NOT NULL,
+				date VARCHAR(50) NOT NULL,
 				title VARCHAR(50) NOT NULL UNIQUE,
-				content VARCHAR(15) NOT NULL UNIQUE			
+				content VARCHAR(100) NOT NULL UNIQUE			
             )
             """
         )

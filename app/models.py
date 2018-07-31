@@ -14,9 +14,9 @@ class DiaryEntry():
 
     """ this one is to initialise all parameters for the entry class """
 
-    def __init__(self, id, today, title, content):
+    def __init__(self, id, date, title, content):
         self.id = id
-        self.today = today
+        self.date = date
         self.title = title
         self.content = content
         

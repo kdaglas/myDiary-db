@@ -28,11 +28,11 @@ class FieldValidation:
             return jsonify({"message": "the content is missing"}), 400
 
 
-    # def validate_entered_id(self, id):
-    #     try:
-    #         entry_id = int(id)
-    #     except ValueError:
-    #         return jsonify({"message": "id should be an interger"}), 400
+    def validate_entered_id(self, id):
+        try:
+            entry_id = int(id)
+        except ValueError:
+            return jsonify({"message": "id should be an interger"}), 400
 
 
    
