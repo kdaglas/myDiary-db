@@ -28,6 +28,12 @@ Go into the folder, create a virtual environment, activate it and then use a pip
     $ pip install -r requirements.txt
     $ python run.py
 ```
+Install postgreSQL on your machine
+Create a database by typing this in your postgres shell
+```
+    CREATE DATABASE your_own_db;
+```
+
 
 ### Built with and by:
 
