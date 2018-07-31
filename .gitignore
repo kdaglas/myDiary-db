@@ -1,7 +1,7 @@
-ENVN
+envn/
+.vscode/
 app/*.pyc
 test/*.pyc/
-.vscode/
 app/__pycache__/.ar
 app/database/__pycache__/.
 app/database/__pycache__/.
