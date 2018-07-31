@@ -35,7 +35,7 @@ class DatabaseConnect:
 				entry_id SERIAL PRIMARY KEY,
 				secondName VARCHAR(50) NOT NULL,
 				title VARCHAR(50) NOT NULL UNIQUE,
-				content VARCHAR(15) NOT NULL UNIQUE,			
+				content VARCHAR(15) NOT NULL UNIQUE			
             )
             """
         )
