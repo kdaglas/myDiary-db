@@ -1,4 +1,4 @@
-envn/
+ENVN/
 app/*.pyc
 test/*.pyc/
 .vscode/
