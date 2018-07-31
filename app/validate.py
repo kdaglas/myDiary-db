@@ -4,7 +4,7 @@ from flask import jsonify
 
 class FieldValidation:
 
-    def user_validation(self, username, emailadress, password):
+    def user_validation(self, username, emailaddress, password):
 
         if not username:
             return jsonify({"message": "username is missing"}), 400

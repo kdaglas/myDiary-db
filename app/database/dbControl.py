@@ -3,7 +3,7 @@ from pprint import pprint
 from app import app
 
 
-class DatabaseConnection:
+class DatabaseConnect:
     def __init__(self):
         if app.config['TESTING']:
             print("Testing")
@@ -27,7 +27,7 @@ class DatabaseConnection:
                 username VARCHAR(50) NOT NULL UNIQUE,
                 emailaddress VARCHAR(15) NOT NULL UNIQUE,
                 password VARCHAR(25) NOT NULL
-            )
+            );
             """,
 
             """

@@ -2,10 +2,10 @@ import unittest
 from run import app
 from flask import jsonify, json
 from app.models import User
-from app.database.dbControl import DatabaseConnection
+from app.database.dbControl import DatabaseConnect
 
 
-my_connection = DatabaseConnection()
+my_connection = DatabaseConnect()
 
 
 class Test_auth(unittest.TestCase):
