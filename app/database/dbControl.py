@@ -56,4 +56,3 @@ class DatabaseConnection:
         )
         for query in delete_queries:
             self.cursor.execute(query)
-            
