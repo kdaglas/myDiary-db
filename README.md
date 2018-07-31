@@ -4,15 +4,17 @@
 
 This api allows the diary users to register and access their accounts.
 
-### Feautures
+### Features
 
 - Register a user
 - Login a user
 
 ### Requirements
 
+
 Python 2.7.x and above
 Note: Python needs to be installed globally (not in the virtual environment)
+pip: A python package used to install modules specified in the requirements text file.
 
 ### How to use:
 
@@ -23,19 +25,26 @@ https://github.com/kdaglas/myDiary-db.git
 Go into the folder, create a virtual environment, activate it and then use a pip command to install the requirements and run the app; below are the steps to take:
 ```
     $ cd myDiary-db
-    $ virtualenv venv
-    $ source venv/bin/activate
+    $ virtualenv envn
+    $ source envn/bin/activate
     $ pip install -r requirements.txt
     $ python run.py
 ```
 Install postgreSQL on your machine
 Create a database by typing this in your postgres shell
 ```
-    CREATE DATABASE your_own_db;
+    CREATE DATABASE mydiary;
+    CREATE DATABASE testdb;
 ```
 
+### Testing
+
+To run tests, activate your virtual environment and in the commandline shell, run:
+nosetests
 
 ### Built with and by:
 
 - [Flask](https://flask.pocoo.org/) - Python webframework
 - [PostgreSQL](https://www.postgresql.org/)- Open source relational database
+
+Author: Douglas Kato

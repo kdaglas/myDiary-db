@@ -1,6 +1,5 @@
 app/*.pyc
 test/*.pyc/
-
 envn
 env/
 .vscode/
