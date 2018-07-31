@@ -31,4 +31,5 @@ Go into the folder, create a virtual environment, activate it and then use a pip
 
 ### Built with and by:
 
-[Flask](https://flask.pocoo.org/) - Python webframework
+- [Flask](https://flask.pocoo.org/) - Python webframework
+- [PostgreSQL](https://www.postgresql.org/)- Open source relational database
