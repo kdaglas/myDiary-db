@@ -38,3 +38,22 @@ class DatabaseConnection:
 				content VARCHAR(15) NOT NULL UNIQUE,			
             )
             """
+        )
+        for query in queries:
+            self.cursor.execute(query)
+
+
+    def delete_tables(self):
+
+        delete_queries = (
+            """
+            DROP TABLE IF EXISTS users CASCADE
+            """,
+
+            """
+			DROP TABLE IF EXISTS entries CASCADE
+			"""
+        )
+        for query in delete_queries:
+            self.cursor.execute(query)
+            
