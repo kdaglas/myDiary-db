@@ -2,14 +2,16 @@
 from app.database.dbController import DatabaseConnection
 
 connect = DatabaseConnection()
-cursor = connect.cursor
+cursor = connect.get_connection().cursor()
 
 
 def add_new_user(username, emailaddress, password):
     query = (
-        """INSERT INTO users (username, emailaddress, password) VALUES ('{}', '{}', '{}')""".
+        """INSERT INTO users (user_id, username, emailaddress, password) VALUES (DEFAULT, '{}', '{}', '{}') RETURNING user_id, username, emailaddress, password""".
         format(username, emailaddress, password))
     cursor.execute(query)
+    rows = cursor.fetchone()
+    return rows
 
 
 def get_user_by_username(username):

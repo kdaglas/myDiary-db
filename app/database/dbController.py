@@ -17,15 +17,18 @@ class DatabaseConnection:
         else:
             print("Development")
             self.con = psycopg2.connect(
-                            database="mydiary", 
-                            user="admin", 
-                            password="admin", 
+                            database="postgres", 
+                            user="postgres", 
+                            password="password", 
                             host="localhost", 
                             port="5432"
                         )
 
         self.con.autocommit = True
         self.cursor = self.con.cursor()
+
+    def get_connection(self):
+        return self.con
 
     """ This constructor is for creating the tables """
     def create_tables(self):

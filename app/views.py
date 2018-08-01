@@ -4,33 +4,50 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from app.validate import FieldValidation
 from app import app
 import json
+import uuid
+from app.database.dbfuncs import add_new_user
+from werkzeug.security import generate_password_hash, check_password_hash
 from app.models import User, DiaryEntry
 from datetime import date
 
 
+app.config
 validate = FieldValidation()
 diary_blueprint = Blueprint("diary_blueprint", __name__)
 
 
 @app.route("/api/v1/register", methods=['POST'])
 def register():
-    # token
-    # pass
+    
     data = request.get_json()
-    username = data.get('username')
-    emailaddress = data.get('emailaddress')
-    password = data.get('password')
+    
+    new_user = User(data['username'], data['emailaddress'], data['password'])
+    result = add_new_user(new_user.username,new_user.emailaddress,new_user.password)
+    return str({
+        "user_id": result[0],
+        "username": result[1],
+        "emailaddress": result[2],
+        "password": result[3]
+    }), 200
+    return jsonify({'message': 'Successfully logged in'})
 
-    if len(username) < 1:
-        return jsonify({'message': 'Username is missing'}), 400
-    if len(emailaddress) < 1:
-        return jsonify({'message': 'Emailaddress is missing'}), 400
-    if len(password) < 1:
-        return jsonify({'message': 'Password is missing'}), 400
+    # pass
+    # hashed_password = generate_password_hash(data['password'], method='sha256')
+    # data = request.get_json()
+    # username = data.get('username')
+    # emailaddress = data.get('emailaddress')
+    # password = data.get('password')
 
-    new_user = User(username, emailaddress, password)
-    User.append(new_user)
-    return jsonify({'message': 'Diary successfully created'})
+    # if len(username) < 1:
+    #     return jsonify({'message': 'Username is missing'}), 400
+    # if len(emailaddress) < 1:
+    #     return jsonify({'message': 'Emailaddress is missing'}), 400
+    # if len(password) < 1:
+    #     return jsonify({'message': 'Password is missing'}), 400
+
+    #
+    # Users.append(new_user)
+    # return jsonify({'message': 'Diary successfully created'})
 
 
 @app.route("/api/v1/login", methods=['POST'])
@@ -43,75 +60,78 @@ def login():
         return jsonify({'message': 'Username is wrong'}), 400
     if len(password) < 1:
         return jsonify({'message': 'Password is wrong'}), 400
+    if username == new_user:
+        return jsonify({'message': 'Password is wrong'}), 400
 
     return jsonify({'message': 'Successfully logged in'})
 
 
-@app.route("/api/v1/diaries", methods=['POST'])
-def add_entry():
-    data = request.get_json()
-    date = str(date.today())
-    title = data.get('title')
-    content = data.get('content')
+# @app.route("/api/v1/diaries", methods=['POST'])
+# def add_entry():
+#     data = request.get_json()
+#     id = len(all_entries) + 1
+#     today = str(date.today())
+#     title = data.get('title')
+#     content = data.get('content')
 
-    if len(title) < 1:
-        return jsonify({'message': 'Title is missing'}), 400
-    elif len(content) < 1:
-        return jsonify({'message': 'Missing entry'}), 400
+#     if len(title) < 1:
+#         return jsonify({'message': 'Title is missing'}), 400
+#     elif len(content) < 1:
+#         return jsonify({'message': 'Missing entry'}), 400
 
-    for entry in all_entries:
-        if entry.title == title:
-            return jsonify({'message':'Same title made'})
+#     for entry in all_entries:
+#         if entry.title == title:
+#             return jsonify({'message':'Same title made'})
     
-    for entry in all_entries:
-        if entry.content == content:
-            return jsonify({'message':'Same content made'})
+#     for entry in all_entries:
+#         if entry.content == content:
+#             return jsonify({'message':'Same content made'})
         
-    new_entry = DiaryEntry(date, title, content)
-    all_entries.append(new_entry)   
+#     new_entry = DiaryEntry(id, today, title, content)
+#     all_entries.append(new_entry)   
     
-    return jsonify({'message': 'Entry successfully added'}), 200
+#     return jsonify({'message': 'Entry successfully added'}), 200
 
 
-@app.route("/api/v1/diaries", methods=['GET'])
-def get_all_entries():
-    if len(all_entries) > 0:
-        print(all_entries)
-        return jsonify({'message': 'All entries successfully viewed',
-                        'All entries here': [
-                            entry.__dict__ for entry in all_entries
-                        ]}), 200
+# @app.route("/api/v1/diaries", methods=['GET'])
+# def get_all_entries():
+#     if len(all_entries) > 0:
+#         print(all_entries)
+#         return jsonify({'message': 'All entries successfully viewed',
+#                         'All entries here': [
+#                             entry.__dict__ for entry in all_entries
+#                         ]}), 200
 
-    return jsonify({'message': 'No entry added'}), 404
-
-
-@app.route("/api/v1/diaries/<entry_id>", methods=["GET"])
-def get_single_entry(entry_id):
-    if int(entry_id) > 0:
-        if len(all_entries) > 0:
-            for entry in all_entries:
-                if entry.id == int(entry_id):
-                    return jsonify({
-                        "message": "Single entry successfully viewed",
-                        "Diary Entry": entry.__dict__
-                    }), 200
-
-            return jsonify({"message": "Entry doesnot exist"})
-        return jsonify({"message": "No entry has been registered yet"}), 404
-    return jsonify({"message": "Single entry id has to bigger than zero"}), 404
+#     return jsonify({'message': 'No entry added'}), 404
 
 
-@app.route("/api/v1/diaries/<entry_id>", methods=["PUT"])
-def edit_entry(entry_id):
-    data = request.get_json()
-    new_entry = {}
-    new_entry['title'] = data.get('title')
-    new_entry['content'] = data.get('content')
+# @app.route("/api/v1/diaries/<entry_id>", methods=["GET"])
+# def get_single_entry(entry_id):
+#     if int(entry_id) > 0:
+#         if len(all_entries) > 0:
+#             for entry in all_entries:
+#                 if entry.id == int(entry_id):
+#                     return jsonify({
+#                         "message": "Single entry successfully viewed",
+#                         "Diary Entry": entry.__dict__
+#                     }), 200
 
-    for entry in all_entries:
-        if entry.id == int(entry_id):
-            entry.title = new_entry['title']
-            entry.content = new_entry['content']
-            return jsonify({"message": "Entry has been modified"}), 200
-        return jsonify({"message": "No such entry"}), 404
-    return jsonify({"message": "Single entry id has to be bigger than zero"}), 404
+#             return jsonify({"message": "Entry doesnot exist"})
+#         return jsonify({"message": "No entry has been registered yet"}), 404
+#     return jsonify({"message": "Single entry id has to bigger than zero"}), 404
+
+
+# @app.route("/api/v1/diaries/<entry_id>", methods=["PUT"])
+# def edit_entry(entry_id):
+#     data = request.get_json()
+#     new_entry = {}
+#     new_entry['title'] = data.get('title')
+#     new_entry['content'] = data.get('content')
+
+#     for entry in all_entries:
+#         if entry.id == int(entry_id):
+#             entry.title = new_entry['title']
+#             entry.content = new_entry['content']
+#             return jsonify({"message": "Entry has been modified"}), 200
+#         return jsonify({"message": "No such entry"}), 404
+#     return jsonify({"message": "Single entry id has to be bigger than zero"}), 404
