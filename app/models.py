@@ -3,8 +3,7 @@ class User(object):
 
     """ this constructor is to initialise all parameters for the user object """
 
-    def __init__(self, id, username, emailaddress, password):
-        self.id = id
+    def __init__(self, username, emailaddress, password):
         self.username = username
         self.emailaddress = emailaddress
         self.password = password
