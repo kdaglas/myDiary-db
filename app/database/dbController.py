@@ -7,14 +7,14 @@ class DatabaseConnection:
     def __init__(self):
         if app.config['TESTING']:
             print("Testing")
-            self.con = psycopg2.connect(database="postgres", user="postgres",
-                                        password="postgres", host="localhost",
+            self.con = psycopg2.connect(database="testdb", user="postgres",
+                                        password="password", host="localhost",
                                         port="5432"
                                         )
         else:
             print("Development")
-            self.con = psycopg2.connect(database="postgres", user="postgres",
-                                        password="postgres", host="localhost",
+            self.con = psycopg2.connect(database="mydiary", user="postgres",
+                                        password="password", host="localhost",
                                         port="5432"
                                         )
 
@@ -40,7 +40,6 @@ class DatabaseConnection:
 
             """
             CREATE TABLE IF NOT EXISTS entries (
-                FOREIGN KEY user_id 
                 entry_id SERIAL PRIMARY KEY,
                 day VARCHAR(50) NOT NULL,
                 title VARCHAR(50) NOT NULL UNIQUE,

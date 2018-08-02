@@ -51,7 +51,7 @@ def register():
 
 @app.route("/api/v1/diaries", methods=['POST'])
 @jwt_required
-def add_entry(username):
+def add_entry():
     data = request.get_json()
     day = date.today()
     title = data.get('title')
@@ -64,7 +64,7 @@ def add_entry(username):
 
 @app.route("/api/v1/diaries", methods=['GET'])
 @jwt_required
-def getAllEntries(username):
+def getAllEntries():
 
     all_entries = get_all_entries()
     lst = []
@@ -82,7 +82,7 @@ def getAllEntries(username):
 
 @app.route("/api/v1/diaries/<entry_id>", methods=["GET"])
 @jwt_required
-def getting_single_entry(username, entry_id):
+def getting_single_entry(entry_id):
     entry = get_single_entry(entry_id)
 
     if not entry:
@@ -101,13 +101,13 @@ def getting_single_entry(username, entry_id):
 
 @app.route('/api/v1/diaries/<entry_id>', methods=['PUT'])
 @jwt_required
-def edit_entry(username, entry_id):
+def edit_entry(entry_id):
     data = request.get_json()
     new_entry = {}
     new_entry['title'] = data.get('title')
     new_entry['content'] = data.get('content')
-    for entry in all_entries:
-        if entry.id == int(entry_id):
+    for entry in get_all_entries():
+        if entry["entry_id"] == int(entry_id):
             entry.title = new_entry['title']
             entry.content = new_entry['content']
             return jsonify({"message": "Entry has been modified"}), 200
@@ -117,13 +117,8 @@ def edit_entry(username, entry_id):
 
 @app.route("/api/v1/diaries/<entry_id>", methods=['DELETE'])
 @jwt_required
-def deleting_single_entries(username, entry_id):
+def deleting_single_entries(entry_id):
     entry = {}
     entry = delete_single_entry(entry_id)
 
-    if not entry:
-        return jsonify({'message': 'No such entry made'})
-
-    if type(DiaryEntry.get_entry_by_id(user_id, entry_id)) == dict:
-        return jsonify({entry.delete_single_entry(user_id, entry_id)}), 200
-    return jsonify({'message': 'Single entry successfully deleted'}), 200
+    return entry

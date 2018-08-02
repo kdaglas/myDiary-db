@@ -1,5 +1,6 @@
 """ Interaction with the db"""
 from app.database.dbController import DatabaseConnection
+from flask import jsonify
 
 connect = DatabaseConnection()
 cursor = connect.get_connection().cursor()
@@ -66,10 +67,22 @@ def get_single_entry(entry_id):
     return rows
 
 
-def delete_single_entry(entry_id):
-    cursor.execute("DELETE * FROM entries WHERE entry_id = '{}'".
+def update_single_entry(entry_id):
+    cursor.execute("UPDATE entries SET title = %s, content = %s WHERE entry_id = %s".
                    format(entry_id))
     rows = cursor.fetchone()
     if not rows:
         return {"message": "Entry does not exist"}
     return rows
+
+
+def delete_single_entry(entry_id):
+    cursor.execute("SELECT * FROM entries WHERE entry_id = '{}'".
+                   format(entry_id))
+    rows = cursor.fetchone()
+    if rows:
+        cursor.execute("DELETE FROM entries WHERE entry_id = '{}'".
+                   format(entry_id))
+        return jsonify({"message": "Entry successful deleted"})           
+    else:
+        return jsonify({"message": "Entry not found"})
