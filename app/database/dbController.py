@@ -40,6 +40,7 @@ class DatabaseConnection:
 
             """
             CREATE TABLE IF NOT EXISTS entries (
+                FOREIGN KEY user_id 
                 entry_id SERIAL PRIMARY KEY,
                 day VARCHAR(50) NOT NULL,
                 title VARCHAR(50) NOT NULL UNIQUE,

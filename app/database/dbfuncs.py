@@ -42,6 +42,15 @@ def add_new_entry(day, title, content):
     cursor.execute(query)
 
 
+def get_entry_by_id(entry_id):
+    query = (
+        """SELECT * from entries where entry_id = '{}'""".
+        format(entry_id))
+    cursor.execute(query)
+    rows = cursor.fetchone()
+    return rows
+
+
 def get_all_entries():
     cursor.execute("SELECT * FROM entries")
     all_entries = cursor.fetchall()
