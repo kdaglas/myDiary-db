@@ -3,7 +3,6 @@ from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identi
 from app.validate import FieldValidation
 from app import app
 from functools import wraps
-# import jwt
 from app.database.dbfuncs import add_new_user, get_user_by_username, add_new_entry, get_all_entries, get_single_entry, delete_single_entry, get_user_by_id, get_entry_by_id
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.models import User, DiaryEntry
@@ -11,7 +10,6 @@ from datetime import date
 
 
 validate = FieldValidation()
-diary_blueprint = Blueprint("diary_blueprint", __name__)
 
 
 @app.route("/api/v1/login", methods=['POST'])
@@ -53,7 +51,7 @@ def register():
 
 @app.route("/api/v1/diaries", methods=['POST'])
 @jwt_required
-def add_entry():
+def add_entry(username):
     data = request.get_json()
     day = date.today()
     title = data.get('title')
@@ -66,7 +64,7 @@ def add_entry():
 
 @app.route("/api/v1/diaries", methods=['GET'])
 @jwt_required
-def getAllEntries():
+def getAllEntries(username):
 
     all_entries = get_all_entries()
     lst = []
@@ -84,7 +82,7 @@ def getAllEntries():
 
 @app.route("/api/v1/diaries/<entry_id>", methods=["GET"])
 @jwt_required
-def getting_single_entry(entry_id):
+def getting_single_entry(username, entry_id):
     entry = get_single_entry(entry_id)
 
     if not entry:
@@ -103,7 +101,7 @@ def getting_single_entry(entry_id):
 
 @app.route('/api/v1/diaries/<entry_id>', methods=['PUT'])
 @jwt_required
-def edit_entry(user_id, entry_id):
+def edit_entry(username, entry_id):
     data = request.get_json()
     new_entry = {}
     new_entry['title'] = data.get('title')
@@ -119,7 +117,7 @@ def edit_entry(user_id, entry_id):
 
 @app.route("/api/v1/diaries/<entry_id>", methods=['DELETE'])
 @jwt_required
-def deleting_single_entries(user_id, entry_id):
+def deleting_single_entries(username, entry_id):
     entry = {}
     entry = delete_single_entry(entry_id)
 
