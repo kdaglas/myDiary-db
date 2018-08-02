@@ -67,13 +67,13 @@ def get_single_entry(entry_id):
     return rows
 
 
-def update_single_entry(entry_id):
-    cursor.execute("UPDATE entries SET title = %s, content = %s WHERE entry_id = %s".
-                   format(entry_id))
-    rows = cursor.fetchone()
-    if not rows:
-        return {"message": "Entry does not exist"}
-    return rows
+def update_single_entry(entry_id, title, content):
+    if get_single_entry(entry_id)["message"] == "Entry does not exist":
+        return "not found"
+    else:
+        cursor.execute("UPDATE entries SET title = %s, content = %s WHERE entry_id = %s",
+                        (title, content, entry_id))
+        return 'Entry edited'
 
 
 def delete_single_entry(entry_id):

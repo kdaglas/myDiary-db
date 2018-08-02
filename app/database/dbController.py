@@ -8,13 +8,13 @@ class DatabaseConnection:
         if app.config['TESTING']:
             print("Testing")
             self.con = psycopg2.connect(database="testdb", user="postgres",
-                                        password="password", host="localhost",
+                                        password="admin", host="localhost",
                                         port="5432"
                                         )
         else:
             print("Development")
             self.con = psycopg2.connect(database="mydiary", user="postgres",
-                                        password="password", host="localhost",
+                                        password="admin", host="localhost",
                                         port="5432"
                                         )
 

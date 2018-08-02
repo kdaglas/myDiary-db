@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identi
 from app.validate import FieldValidation
 from app import app
 from functools import wraps
-from app.database.dbfuncs import add_new_user, get_user_by_username, add_new_entry, get_all_entries, get_single_entry, delete_single_entry, get_user_by_id, get_entry_by_id
+from app.database.dbfuncs import add_new_user, get_user_by_username, add_new_entry, get_all_entries, get_single_entry, delete_single_entry, get_user_by_id, get_entry_by_id, update_single_entry
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.models import User, DiaryEntry
 from datetime import date
@@ -103,16 +103,17 @@ def getting_single_entry(entry_id):
 @jwt_required
 def edit_entry(entry_id):
     data = request.get_json()
-    new_entry = {}
-    new_entry['title'] = data.get('title')
-    new_entry['content'] = data.get('content')
-    for entry in get_all_entries():
-        if entry["entry_id"] == int(entry_id):
-            entry.title = new_entry['title']
-            entry.content = new_entry['content']
-            return jsonify({"message": "Entry has been modified"}), 200
-        return jsonify({"message": "No such entry"}), 404
-    return jsonify({"message": "Single entry id has to be bigger than zero"}), 404
+    title = data.get('title')
+    content = data.get('content')
+
+    if title or content:
+        res = update_single_entry(entry_id, title, content)
+        if res == "not found":
+            return jsonify({"message": "Not found"}), 404
+        else:
+            return jsonify({"message": "Successfully edited"}), 201
+    else:
+        return jsonify({"message": "Either title or content is empty"})
 
 
 @app.route("/api/v1/diaries/<entry_id>", methods=['DELETE'])
@@ -122,3 +123,4 @@ def deleting_single_entries(entry_id):
     entry = delete_single_entry(entry_id)
 
     return entry
+    

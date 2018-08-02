@@ -17,6 +17,10 @@ class Test_auth(unittest.TestCase):
         my_connection.delete_tables()
         my_connection.create_tables()
 
+    def registering(self, username, emailaddress, password):
+        pass
+
+
     def test_registering(self):
         """ Testing if user is successfully registered """
         response = self.app.post("/api/v1/user/register",
