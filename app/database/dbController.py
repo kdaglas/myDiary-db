@@ -7,14 +7,14 @@ class DatabaseConnection:
     def __init__(self):
         if app.config['TESTING']:
             print("Testing")
-            self.con = psycopg2.connect(database="testdb", user="admin",
-                                        password="admin", host="localhost",
+            self.con = psycopg2.connect(database="postgres", user="postgres",
+                                        password="postgres", host="localhost",
                                         port="5432"
                                         )
         else:
             print("Development")
             self.con = psycopg2.connect(database="postgres", user="postgres",
-                                        password="password", host="localhost",
+                                        password="postgres", host="localhost",
                                         port="5432"
                                         )
 

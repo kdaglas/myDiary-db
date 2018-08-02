@@ -11,9 +11,9 @@ my_connection = DatabaseConnection()
 class Test_View_Entries(unittest.TestCase):
 
     def setUp(self):
-    self.app = app.test_client()
-    my_connection.delete_tables()
-    my_connection.create_tables()
+        self.app = app.test_client()
+        my_connection.delete_tables()
+        my_connection.create_tables()
 
     def test_get_all_entries(self):
         """ a test for getting all entries """

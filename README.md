@@ -8,6 +8,11 @@ This api allows the diary users to register and access their accounts.
 
 - Register a user
 - Login a user
+- View all entries from the database
+- View contents of an entry
+- Add an entry
+- Modify an entry
+- Delete an entry
 
 ### Requirements
 
