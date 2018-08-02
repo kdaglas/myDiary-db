@@ -1,5 +1,5 @@
 import psycopg2
-from pprint import pprint
+
 from app import app
 
 
@@ -7,22 +7,16 @@ class DatabaseConnection:
     def __init__(self):
         if app.config['TESTING']:
             print("Testing")
-            self.con = psycopg2.connect(
-                            database="testdb", 
-                            user="admin", 
-                            password="admin", 
-                            host="localhost", 
-                            port="5432"
-                        )
+            self.con = psycopg2.connect(database="testdb", user="admin",
+                                        password="admin", host="localhost",
+                                        port="5432"
+                                        )
         else:
             print("Development")
-            self.con = psycopg2.connect(
-                            database="postgres", 
-                            user="postgres", 
-                            password="password", 
-                            host="localhost", 
-                            port="5432"
-                        )
+            self.con = psycopg2.connect(database="postgres", user="postgres",
+                                        password="password", host="localhost",
+                                        port="5432"
+                                        )
 
         self.con.autocommit = True
         self.cursor = self.con.cursor()
@@ -31,6 +25,7 @@ class DatabaseConnection:
         return self.con
 
     """ This constructor is for creating the tables """
+
     def create_tables(self):
 
         queries = (
@@ -44,11 +39,11 @@ class DatabaseConnection:
             """,
 
             """
-			CREATE TABLE IF NOT EXISTS entries (
-				entry_id SERIAL PRIMARY KEY,
-				date VARCHAR(50) NOT NULL,
-				title VARCHAR(50) NOT NULL UNIQUE,
-				content VARCHAR(100) NOT NULL UNIQUE			
+            CREATE TABLE IF NOT EXISTS entries (
+                entry_id SERIAL PRIMARY KEY,
+                day VARCHAR(50) NOT NULL,
+                title VARCHAR(50) NOT NULL UNIQUE,
+                content VARCHAR(100) NOT NULL UNIQUE
             )
             """
         )
@@ -64,8 +59,8 @@ class DatabaseConnection:
             """,
 
             """
-			DROP TABLE IF EXISTS entries CASCADE
-			"""
+            DROP TABLE IF EXISTS entries CASCADE
+            """
         )
         for query in delete_queries:
             self.cursor.execute(query)

@@ -13,7 +13,6 @@ class FieldValidation:
         if not password:
             return jsonify({"message": "password is missing"}), 400
 
-
     def login_validation(self, username, password):
         if not username:
             return jsonify({"message": "missing or wrong username"}), 400
@@ -26,7 +25,6 @@ class FieldValidation:
             return jsonify({"message": "the title is missing"}), 400
         if not content:
             return jsonify({"message": "the content is missing"}), 400
-
 
     # def validate_entered_id(self, id):
     #     try:
