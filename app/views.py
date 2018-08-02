@@ -1,10 +1,9 @@
-from flask import jsonify, request, Blueprint
+from flask import jsonify, request
 from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identity
 from app.validate import FieldValidation
 from app import app
 from functools import wraps
 from app.database.dbfuncs import add_new_user, get_user_by_username, add_new_entry, get_all_entries, get_single_entry, delete_single_entry, get_user_by_id, get_entry_by_id, update_single_entry
-from werkzeug.security import generate_password_hash, check_password_hash
 from app.models import User, DiaryEntry
 from datetime import date
 
@@ -123,4 +122,3 @@ def deleting_single_entries(entry_id):
     entry = delete_single_entry(entry_id)
 
     return entry
-    
