@@ -1,5 +1,7 @@
 # myDiary
 
+[![Build Status](https://travis-ci.org/kdaglas/myDiary-db.svg?branch=develop)](https://travis-ci.org/kdaglas/myDiary-db)
+
 ## myDiary-db
 
 This api allows the diary users to register and access their accounts.
