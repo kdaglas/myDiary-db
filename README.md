@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/kdaglas/myDiary-db.svg?branch=develop)](https://travis-ci.org/kdaglas/myDiary-db)
 [![Coverage Status](https://coveralls.io/repos/github/kdaglas/myDiary-db/badge.svg?branch=develop)](https://coveralls.io/github/kdaglas/myDiary-db?branch=develop)
+[![Maintainability](https://api.codeclimate.com/v1/badges/f63fed14ca4832fa3d90/maintainability)](https://codeclimate.com/github/kdaglas/myDiary-db/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/f63fed14ca4832fa3d90/test_coverage)](https://codeclimate.com/github/kdaglas/myDiary-db/test_coverage)
 
 ## myDiary-db
 
