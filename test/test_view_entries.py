@@ -12,6 +12,8 @@ class Test_View_Entries(unittest.TestCase):
 
     def setUp(self):
         self.app = app.test_client()
+        app.config["TESTING"] = True
+        # tear_down
         my_connection.delete_tables()
         my_connection.create_tables()
 
