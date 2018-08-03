@@ -104,15 +104,8 @@ def getting_single_entry(entry_id):
     if not entry:
         return jsonify({'message': 'No such entry made'})
 
-    data = request.get_json()
-    dic = {}
-    dic["entry_id"] = data[0]
-    dic["day"] = data[1]
-    dic["title"] = data[2]
-    dic["content"] = data[3]
-
     return jsonify({'message': 'Single entry successfully viewed',
-                    'Single_entry_here': dic}), 200
+                    'Single_entry_here': entry}), 200
 
 
 @app.route('/api/v1/diaries/<entry_id>', methods=['PUT'])
