@@ -50,6 +50,20 @@ To run tests, activate your virtual environment and in the commandline shell, ru
 ```
     $ nosetests
 ```
+#### Endpoints to create a user account and login into the application
+HTTP Method|End point | Public Access|Action
+-----------|----------|--------------|------
+POST | /api/v1/register | True | Create a user account
+POST | /api/v1/login | True | Login a user
+
+#### Endpoints to add, view and modify user entries
+HTTP Method|End point | Public Access|Action
+-----------|----------|--------------|------
+POST | /api/v1/diaries | False | Add an entry
+GET | /api/v1/diaries | False | View all entries for a logged in user
+GET | /api/v1/diaries/<entry_id> | False | View a single entry for a logged in user
+PUT | /api/v1/diaries/<entry_id> | False | Modify a single entry for a logged in user
+DELETE | /api/v1/diaries/<entry_id> | False | Delete a single entry for a logged in user
 
 ### Built with and by:
 
