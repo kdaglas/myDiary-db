@@ -81,7 +81,7 @@ class Test_auth(unittest.TestCase):
                                  data=json.dumps(dict(username="", password="callmee"))
                                  )
         reply = json.loads(response.data)
-        self.assertEquals(reply["message"], "missing or wrong username")
+        self.assertEquals(reply["message"], "Missing username parameter")
         self.assertEquals(response.status_code, 400)
 
     def test_login_with_wrong_or_no_password(self):
@@ -91,5 +91,5 @@ class Test_auth(unittest.TestCase):
                                  data=json.dumps(dict(username="Douglas", password=""))
                                  )
         reply = json.loads(response.data)
-        self.assertEquals(reply["message"], "missing or wrong password")
+        self.assertEquals(reply["message"], "Missing password parameter")
         self.assertEquals(response.status_code, 400)
