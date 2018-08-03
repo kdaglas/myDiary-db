@@ -1,7 +1,7 @@
 """ Interaction with the db"""
 from app.database.dbController import DatabaseConnection
 from flask import jsonify
-import psycopgs2.extras
+import psycopg2.extras
 
 connect = DatabaseConnection()
 cursor = connect.get_connection().cursor()
@@ -60,7 +60,7 @@ def get_all_entries():
 
 
 def get_single_entry(entry_id):
-    cursor = connect.get_connection().cursor(cursor_factory=psycopgs2.extras.RealDictCursor)
+    cursor = connect.get_connection().cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute("SELECT * FROM entries WHERE entry_id = '{}'".
                    format(entry_id))
     rows = cursor.fetchone()
