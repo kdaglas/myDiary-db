@@ -2,6 +2,7 @@ from flask import jsonify, request
 from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identity
 from app.validate import FieldValidation
 from app import app
+import re
 from functools import wraps
 from app.database.dbfuncs import add_new_user, get_user_by_username, add_new_entry, get_all_entries, get_single_entry, delete_single_entry, get_user_by_id, get_entry_by_id, update_single_entry
 from app.models import User, DiaryEntry
@@ -17,18 +18,14 @@ def login():
     username = request.json.get('username', None)
     password = request.json.get('password', None)
 
-    # cursor = connect.get_connection().cursor()
-
-    # cursor.execute("SELECT * FROM users WHERE username = '{}' AND password = '{}'".format(username, password))
-    # rows = cursor.fetchone()
-    # if not rows:
-    #     return {"message": "User does not exist"}
-    # return rows
-
     if not username:
         return jsonify({"message": "Missing username parameter"}), 400
+    elif not re.search("^[a-zA-Z]", username):
+        return jsonify({"message": "username should be characters"}), 400
     if not password:
         return jsonify({"message": "Missing password parameter"}), 400
+    elif not re.search("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", password):
+        return jsonify({"message": "Password should be 8 characters, 1 letter, 1 number"}), 400
 
 
     access_token = create_access_token(identity=username)
@@ -43,6 +40,19 @@ def register():
     emailaddress = data.get('emailaddress')
     password = data.get('password')
 
+    if not username:
+        return jsonify({"message": "Missing username parameter"}), 400
+    elif not re.search("^[a-zA-Z]", username):
+        return jsonify({"message": "username should be characters"}), 400
+    if not emailaddress:
+        return jsonify({"message": "emailaddress is missing"}), 400
+    elif not re.search("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", emailaddress):
+        return jsonify({"message": "Email address in wrong format"}), 400
+    if not password:
+        return jsonify({"message": "Missing password parameter"}), 400
+    elif not re.search("^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$", password):
+        return jsonify({"message": "password must have at 8 characters, 1 letter and 1 number"}), 400
+
     add_new_user(username, emailaddress, password)
 
     return jsonify({'message': 'Successfully signed up'}), 200
@@ -55,6 +65,13 @@ def add_entry():
     day = date.today()
     title = data.get('title')
     content = data.get('content')
+
+    if not title:
+        return jsonify({"message": "Title is missing"}), 400
+    elif not re.search("^[a-zA-Z]", title):
+        return jsonify({"message": "title should be characters"}), 400
+    if not content:
+        return jsonify({"message": "content is missing"}), 400
 
     add_new_entry(day, title, content)
 
