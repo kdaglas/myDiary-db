@@ -1,6 +1,7 @@
 # myDiary
 
 [![Build Status](https://travis-ci.org/kdaglas/myDiary-db.svg?branch=develop)](https://travis-ci.org/kdaglas/myDiary-db)
+[![Coverage Status](https://coveralls.io/repos/github/kdaglas/myDiary-db/badge.svg?branch=develop)](https://coveralls.io/github/kdaglas/myDiary-db?branch=develop)
 
 ## myDiary-db
 
