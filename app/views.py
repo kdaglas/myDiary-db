@@ -45,11 +45,7 @@ def register():
         return jsonify({"message": "Email address in wrong format"}), 400
     if not password:
         return jsonify({"message": "Missing password parameter"}), 400
-<<<<<<< HEAD
-    elif not re.search("^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$", password):
-=======
     elif not re.search(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$", password):
->>>>>>> 227183d708bf02fa23a64c9bfad9ee25371febe0
         return jsonify({"message": "password must have 7 characters, 1 letter and 1 number"}), 400
 
     add_new_user(username, emailaddress, password)
