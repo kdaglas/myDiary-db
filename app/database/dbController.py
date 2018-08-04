@@ -43,7 +43,7 @@ class DatabaseConnection:
                 entry_id SERIAL PRIMARY KEY,
                 day VARCHAR(50) NOT NULL,
                 title VARCHAR(50) NOT NULL UNIQUE,
-                content VARCHAR(100) NOT NULL UNIQUE
+                content VARCHAR(100) NOT NULL
             )
             """
         )
