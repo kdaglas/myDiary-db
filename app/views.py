@@ -1,15 +1,11 @@
 from flask import jsonify, request
 from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identity
-from app.validate import FieldValidation
 from app import app
 import re
 from functools import wraps
 from app.database.dbfuncs import add_new_user, get_user_by_username, add_new_entry, get_all_entries, get_single_entry, delete_single_entry, get_user_by_id, get_entry_by_id, update_single_entry
 from app.models import User, DiaryEntry
 from datetime import date
-
-
-validate = FieldValidation()
 
 
 @app.route("/api/v1/login", methods=['POST'])
@@ -68,8 +64,6 @@ def add_entry():
 
     if not title:
         return jsonify({"message": "Title is missing"}), 400
-    elif not re.search("^[a-zA-Z]", title):
-        return jsonify({"message": "title should be characters"}), 400
     if not content:
         return jsonify({"message": "content is missing"}), 400
 
