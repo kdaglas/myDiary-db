@@ -6,7 +6,7 @@ from app.models import User
 from flask_jwt_extended import create_access_token
 
 validate = FieldValidation()
-authenticate_blueprint = Blueprint("authenticate_blueprint", __name__)
+auth_blueprint = Blueprint("auth_blueprint", __name__)
 
 
 class RegisterUser(MethodView):
@@ -70,7 +70,7 @@ class Login(MethodView):
 login_view = Login.as_view('login_view')
 registry_view = RegisterUser.as_view('registry_view')
 
-authenticate_blueprint.add_url_rule('/api/v1/user/login',
-                                    view_func=login_view, methods=['POST'])
-authenticate_blueprint.add_url_rule("/api/v1/user/register",
-                                    view_func=registry_view, methods=['POST'])
+auth_blueprint.add_url_rule('/api/v1/user/login',
+                            view_func=login_view, methods=['POST'])
+auth_blueprint.add_url_rule("/api/v1/user/register",
+                            view_func=registry_view, methods=['POST'])

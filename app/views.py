@@ -20,9 +20,8 @@ def login():
         return jsonify({"message": "username should be characters"}), 400
     if not password:
         return jsonify({"message": "Missing password parameter"}), 400
-    elif not re.search("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", password):
-        return jsonify({"message": "Password should be 8 characters, 1 letter, 1 number"}), 400
-
+    elif not re.search(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$", password):
+        return jsonify({"message": "Password should be 7 characters, 1 letter, 1 number"}), 400
 
     access_token = create_access_token(identity=username)
     return jsonify(access_token=access_token), 200
@@ -42,12 +41,12 @@ def register():
         return jsonify({"message": "username should be characters"}), 400
     if not emailaddress:
         return jsonify({"message": "emailaddress is missing"}), 400
-    elif not re.search("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", emailaddress):
+    elif not re.search(r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", emailaddress):
         return jsonify({"message": "Email address in wrong format"}), 400
     if not password:
         return jsonify({"message": "Missing password parameter"}), 400
-    elif not re.search("^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$", password):
-        return jsonify({"message": "password must have at 8 characters, 1 letter and 1 number"}), 400
+    elif not re.search(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$", password):
+        return jsonify({"message": "password must have 7 characters, 1 letter and 1 number"}), 400
 
     add_new_user(username, emailaddress, password)
 
@@ -64,6 +63,8 @@ def add_entry():
 
     if not title:
         return jsonify({"message": "Title is missing"}), 400
+    elif not re.search("^[a-zA-Z]", title):
+        return jsonify({"message": "title should be characters"}), 400
     if not content:
         return jsonify({"message": "content is missing"}), 400
 
