@@ -26,9 +26,9 @@ class Test_View_Entries(unittest.TestCase):
 
         reply = json.loads(response.data.decode())
         response2 = self.app.get("/api/v1/diaries",
-        content_type='application/json', data=reply)
+                                content_type='application/json', data=reply)
         reply2 = json.loads(response2.data.decode())
-        self.assertEquals(reply2["message"], "All entries successfully viewed")
+        self.assertEquals(reply2['message'], 'All entries successfully viewed')
 
     def test_get_single_diary(self):
         '''Test to fetch single diary'''
@@ -36,16 +36,10 @@ class Test_View_Entries(unittest.TestCase):
                                 content_type='application/json',
                                 data=json.dumps(dict(id="1", title="Coding", content="The best way of life is code", today="17.07.2018"),)
                                 )
-
-        # was actually commented out
-        # response = self.app.get("/api/v1/diaries",
-        #                         content_type='application/json',
-        #                         data=json.dumps(dict(id="2", title="Playing", content="The best way of life is playing", today="18.07.2018"),)
-        #                         )
-
+                                
         reply = json.loads(response.data.decode())
         response2 = self.app.get("/api/v1/diaries/1",
-        content_type='application/json',
-            data=reply)
+                                content_type='application/json',
+                                data=reply)
         reply2 = json.loads(response2.data.decode())
-        self.assertEquals(reply2["message"], "Single entry successfully viewed")
+        self.assertEquals(reply2['message'], 'Single entry successfully viewed')
