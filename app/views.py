@@ -103,21 +103,37 @@ def getting_single_entry(entry_id):
                     'Single_entry_here': entry}), 200
 
 
+# @app.route('/api/v1/diaries/<entry_id>', methods=['PUT'])
+# @jwt_required
+# def edit_entry(entry_id):
+#     data = request.get_json()
+#     title = data.get('title')
+#     content = data.get('content')
+
+#     if title or content:
+#         res = update_single_entry(entry_id, title, content)
+#         if res == "not found":
+#             return jsonify({"message": "Not found"}), 404
+#         else:
+#             return jsonify({"message": "Successfully edited"}), 201
+#     else:
+#         return jsonify({"message": "Either title or content is empty"})
+
+
 @app.route('/api/v1/diaries/<entry_id>', methods=['PUT'])
 @jwt_required
 def edit_entry(entry_id):
     data = request.get_json()
-    title = data.get('title')
-    content = data.get('content')
-
-    if title or content:
-        res = update_single_entry(entry_id, title, content)
-        if res == "not found":
-            return jsonify({"message": "Not found"}), 404
-        else:
-            return jsonify({"message": "Successfully edited"}), 201
-    else:
-        return jsonify({"message": "Either title or content is empty"})
+    new_entry = {}
+    new_entry['title'] = data.get('title')
+    new_entry['content'] = data.get('content')
+    for entry in get_all_entries():
+        if entry["entry_id"] == int(entry_id):
+            entry.title = new_entry['title']
+            entry.content = new_entry['content']
+            return jsonify({"message": "Entry has been modified"}), 200
+        return jsonify({"message": "No such entry"}), 404
+    return jsonify({"message": "Single entry id has to be bigger than zero"}), 404
 
 
 @app.route("/api/v1/diaries/<entry_id>", methods=['DELETE'])
